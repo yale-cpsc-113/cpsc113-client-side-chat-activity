@@ -9,63 +9,40 @@ console.log('You should see this log message in your console');
     
     var chats = [];
 
+    // TODO #4: Write a function that adds `li` elements to the `ul`
+    // element on the page that has `id="chats"`. This function takes
+    // an integer `startIndex` that indicates where the new messages
+    // in the `chats` variable start (ie. those that should be written
+    // to the page).
+    // 
     function updateDOM(startIndex){
-        var chatList = document.getElementById('chats');
-        function createListElement(text){
-            var li = document.createElement('li');
-            var content = document.createTextNode(text);
-            li.appendChild(content);
-            return li;
-        }
-        for (var i = startIndex; i < chats.length; i++) {
-            chatList.appendChild(createListElement(chats[i]));
-        }
     }
 
+    // TODO #3: Write a function that requests an array of new chats
+    // from the server at `/chats/LENGTH` where LENGTH is the 
+    // latest chat number that you have locally plus one. When you
+    // get new chats, push them onto the `chats` array variable (above)
+    // and call `updateDOM` with the index of in that array where the
+    // new chats start. When the request completes, call `fetchChatsFromServer`
+    // should call itself again after a one or two second delay.
+    // 
     function fetchChatsFromServer(){
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.onreadystatechange = function(){
-            if(httpRequest.readyState !== XMLHttpRequest.DONE){
-                return;
-            }
-            // Call this function again in 2s
-            setTimeout(fetchChatsFromServer, 2000);
-            
-            if(httpRequest.status !== 200){
-                return;
-            }
-            try {
-                var newChats = JSON.parse(httpRequest.responseText);
-            } catch (e) {
-                console.log('Failed to parse chats!');
-                return;
-            }
-            var startIndex = chats.length;
-            for (var i = 0; i < newChats.length; i++) {
-                chats.push(newChats[i]);
-            }
-            updateDOM(startIndex);
-        };
-        httpRequest.open('GET', '/chats/' + chats.length);
-        httpRequest.send();
     }
     
+
+    // TODO #2: Write a function that takes a string and POSTs it
+    // to the server at `/chats/`. You can send your data as either
+    // 'application/x-www-form-urlencoded' or 'application/json;charset=UTF-8'.
+    // See `index.js` to see how that request will be handled.
+    // 
     function sendChatMessage(message){
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.open('POST', '/chats/');
-        // httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        // httpRequest.send('message=' + encodeURIComponent(message));
-        httpRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        httpRequest.send(JSON.stringify({message: message}));
     }
     
+    // TODO #1: Add an event listener that listens for when a user
+    // clicks on the submit button and then calls the `sendChatMessage`
+    // function with the value of the text entered in the textbox.
+    // 
     function startAcceptingUserChats(){
-        var submitButton = document.getElementById('submit');
-        console.log(submitButton);
-        submitButton.addEventListener('click', function(){
-            var input = document.getElementById('message');
-            sendChatMessage(input.value);
-        });
     }
     
     // This event is fired when all the content on the page
