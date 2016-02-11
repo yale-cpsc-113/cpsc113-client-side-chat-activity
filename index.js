@@ -1,6 +1,10 @@
+"use strict";
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
+
+// Serve static files (css, js, images) out of the public directory
+app.use(express.static('public'));
 
 // When we get a request with an empty path,
 // send our `index.html` file.
@@ -32,10 +36,12 @@ app.get('/chats/:latest', function(req, res){
 
 // When we receive a POST request to `/chats`, parse
 // any submitted forms and push the new chats onto 
-// our `chats` array.
+// our `chats` array. Also accept JSON.
 // 
-var bodyParseMiddleware = bodyParser.urlencoded({ extended: false });
-app.post('/chats', bodyParseMiddleware, function(req, res){
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json())
+
+app.post('/chats', function(req, res){
     var newMessage = req.body.message;
     if(newMessage && newMessage.length > 0){
         chats.push(newMessage);
