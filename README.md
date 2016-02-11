@@ -47,5 +47,5 @@ are advanced, I recommend you use vanilla JavaScript (the above MDN articles wil
 ## Caveats
 
 Astute observers will notice that this is an inelegant manner of achieving chat and that 
-could have instead used websockets and good MVC structure in the client. We did not for
+we could have instead used websockets and good MVC structure in the client. We did not for
 pedagodigical motivations.
