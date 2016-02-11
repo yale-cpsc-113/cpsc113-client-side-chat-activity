@@ -22,3 +22,20 @@ nodemon index.js
 and `public/js/chat.js` to understand what is going on.
 9. Follow the instructions marked "TODO" in the `public/js/chat.js` file in order to
 get your chat app working.
+
+## How it works
+
+The `index.html` file includes our `chat.js` file in the client browsers. What you need
+to do is accept user input *without* submitting forms, POST those to the server, and 
+poll the server for new chats messages, adding them to the DOM. This will force you to
+use three client-side JavaScript abilities that we learned in the readings:
+
+* [Event handling](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events) to 
+respond when the user hits the "submit" button and when new chats are received;
+* [AJAX](https://developer.mozilla.org/en-US/docs/AJAX/Getting_Started) to send chats to the server
+and receive new chats from the server;
+* [DOM manipulation](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+to update the page when new chats are received.
+
+If you are a begginner in client-side JavaScript, I recommend that you use [jQuery](http://jqfundamentals.com/). If you
+are advanced, I recommend you use vanilla JavaScript (the above MDN articles will help a lot).
