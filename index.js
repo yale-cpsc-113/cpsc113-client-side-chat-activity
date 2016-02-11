@@ -2,14 +2,22 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
 
-
+// When we get a request with an empty path,
+// send our `index.html` file.
+// 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/views/index.html');
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-
+// Keep all our chats in an array and populate it
+// with some starter messages.
+// 
 var chats = ['first message', 'second message'];
+
+// When we receive an HTTP GET request like `/chats/2`,
+// send an array of all the chats after index `2` in
+// JSON format.
+// 
 app.get('/chats/:latest', function(req, res){
     try {
         var latest = parseInt(req.params.latest);
@@ -22,7 +30,12 @@ app.get('/chats/:latest', function(req, res){
     res.json(latestChats);
 });
 
-app.post('/chats', function(req, res){
+// When we receive a POST request to `/chats`, parse
+// any submitted forms and push the new chats onto 
+// our `chats` array.
+// 
+var bodyParseMiddleware = bodyParser.urlencoded({ extended: false });
+app.post('/chats', bodyParseMiddleware, function(req, res){
     var newMessage = req.body.message;
     if(newMessage && newMessage.length > 0){
         chats.push(newMessage);
@@ -30,7 +43,8 @@ app.post('/chats', function(req, res){
     res.end();
 })
 
-
+// Start-up the application
+// 
 var port = process.env.PORT || 3000;
 app.listen(port, function () {
     var url = 'http://localhost:' + port;
