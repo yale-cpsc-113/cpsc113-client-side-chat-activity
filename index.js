@@ -31,6 +31,7 @@ app.get('/chats/:latest', function(req, res){
         return;
     }
     var latestChats = chats.slice(latest);
+    console.log('Received requests for chats since #', latest, 'of which there are', latestChats.length);
     res.json(latestChats);
 });
 
@@ -44,6 +45,7 @@ app.use(bodyParser.json())
 app.post('/chats', function(req, res){
     var newMessage = req.body.message;
     if(newMessage && newMessage.length > 0){
+        console.log('Received new chat message: ', message);
         chats.push(newMessage);
     }
     res.end();
